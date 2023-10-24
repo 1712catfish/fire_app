@@ -1,9 +1,6 @@
 # Fire App
 
-![Main Menu](demo/MainMenu.jpg)
-
-![Details Page](demo/DetailsPage.jpg)
-
-![Details Page](demo/DetailsPage1.jpg)
-
-![Report Page](demo/ReportPage.jpg)
+<img src="demo/MainMenu.jpg" width="23%"></img> 
+<img src="demo/DetailsPage.jpg" width="23%"></img> 
+<img src="demo/DetailsPage1.jpg" width="23%"></img> 
+<img src="demo/ReportPage.jpg" width="23%"></img> 
