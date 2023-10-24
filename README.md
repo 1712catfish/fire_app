@@ -1,3 +1,9 @@
-# Flutter YouTube Clone UI Tutorial | Apps From Scratch
+# Fire App
 
-[YouTube Video](https://youtu.be/umhl2hakkcY)
+![Main Menu](demo/MainMenu.jpg)
+
+![Details Page](demo/DetailsPage.jpg)
+
+![Details Page](demo/DetailsPage1.jpg)
+
+![Report Page](demo/ReportPage.jpg)
