@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_youtube_ui/data.dart';
 import 'package:flutter_youtube_ui/screens/home_screen.dart';
+import 'package:flutter_youtube_ui/screens/report_screen.dart';
 import 'package:flutter_youtube_ui/screens/video_screen.dart';
 import 'package:miniplayer/miniplayer.dart';
 
@@ -24,11 +25,16 @@ class _NavScreenState extends State<NavScreen> {
 
   final _screens = [
     HomeScreen(),
-    const Scaffold(body: Center(child: Text('Explore'))),
-    const Scaffold(body: Center(child: Text('Add'))),
-    const Scaffold(body: Center(child: Text('Subscriptions'))),
-    const Scaffold(body: Center(child: Text('Library'))),
+    const ReportScreen(),
+    const Scaffold(body: Center(child: Text('Settings'))),
+    const Scaffold(body: Center(child: Text('Settings'))),
+
+    // const Scaffold(body: Center(child: Text('Subscriptions'))),
+    // const Scaffold(body: Center(child: Text('Library'))),
   ];
+
+  // List<CameraDescription>? cameras;
+
 
   @override
   Widget build(BuildContext context) {
@@ -91,23 +97,84 @@ class _NavScreenState extends State<NavScreen> {
                                                       .textTheme
                                                       .caption!
                                                       .copyWith(
-                                                        color: Colors.white,
+                                                        color: checkFire(selectedVideo) ? Colors.red : Colors.white,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
                                                 ),
                                               ),
                                               Flexible(
-                                                child: Text(
-                                                  selectedVideo.author.username,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .caption!
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w500),
+                                                // child: Text(
+                                                //   selectedVideo.author.username,
+                                                //   overflow:
+                                                //       TextOverflow.ellipsis,
+                                                //   style: Theme.of(context)
+                                                //       .textTheme
+                                                //       .caption!
+                                                //       .copyWith(
+                                                //           fontWeight:
+                                                //               FontWeight.w500),
+                                                // ),
+                                                // child: Text(
+                                                //   '${selectedVideo.sensor} • ${selectedVideo.temp} • ${selectedVideo.visionAI}',
+                                                //   maxLines: 2,
+                                                //   overflow: TextOverflow.ellipsis,
+                                                //   style: Theme.of(context)
+                                                //       .textTheme
+                                                //       .caption!
+                                                //       .copyWith(fontSize: 14.0),
+                                                // ),
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      '${selectedVideo.sensor}',
+                                                      maxLines: 2,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .caption!
+                                                          .copyWith(fontSize: 14.0,
+                                                          color: checkSensor(selectedVideo.sensor) ? Colors.red : Colors.white),
+                                                    ),
+                                                    Text(
+                                                      ' • ',
+                                                      maxLines: 2,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .caption!
+                                                          .copyWith(fontSize: 14.0),
+                                                    ),
+                                                    Text(
+                                                      '${selectedVideo.temp}',
+                                                      maxLines: 2,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .caption!
+                                                          .copyWith(fontSize: 14.0,
+                                                          color: checkTemp(selectedVideo.temp) ? Colors.red : Colors.white),
+                                                    ),
+                                                    Text(
+                                                      ' • ',
+                                                      maxLines: 2,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .caption!
+                                                          .copyWith(fontSize: 14.0),
+                                                    ),
+                                                    Text(
+                                                      '${selectedVideo.visionAI}',
+                                                      maxLines: 2,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .caption!
+                                                          .copyWith(fontSize: 14.0,
+                                                          color: checkAI(selectedVideo.visionAI) ? Colors.red : Colors.white),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
@@ -152,31 +219,33 @@ class _NavScreenState extends State<NavScreen> {
         selectedFontSize: 10.0,
         unselectedFontSize: 10.0,
         items: const [
+
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),
             label: 'Home',
           ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.explore_outlined),
+          //   activeIcon: Icon(Icons.explore),
+          //   label: 'Explore',
+          // ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.explore_outlined),
-            activeIcon: Icon(Icons.explore),
-            label: 'Explore',
+            icon: Icon(Icons.camera_alt_outlined),
+            activeIcon: Icon(Icons.camera_alt),
+            label: 'Report',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline),
-            activeIcon: Icon(Icons.add_circle),
-            label: 'Add',
+            icon: Icon(Icons.settings_outlined),
+            activeIcon: Icon(Icons.settings),
+            label: 'Settings',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.subscriptions_outlined),
-            activeIcon: Icon(Icons.subscriptions),
-            label: 'Subscriptions',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.video_library_outlined),
-            activeIcon: Icon(Icons.video_library),
-            label: 'Library',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.subscriptions_outlined),
+          //   activeIcon: Icon(Icons.subscriptions),
+          //   label: 'Subscriptions',
+          // ),
+
         ],
       ),
     );

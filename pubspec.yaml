@@ -25,3 +25,9 @@ flutter:
 
   assets:
     - assets/yt_logo_dark.png
+
+  fonts:
+    - family: Youtube
+      fonts:
+        - asset: assets/youtube-sans-medium.ttf
+

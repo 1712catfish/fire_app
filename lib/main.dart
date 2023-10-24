@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_youtube_ui/screens/nav_screen.dart';
 
-void main() {
+
+Future<void> main() async {
   runApp(ProviderScope(child: MyApp()));
 }
 

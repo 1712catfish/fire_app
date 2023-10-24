@@ -23,17 +23,22 @@ class VideoInfo extends StatelessWidget {
             style:
                 Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 15.0),
           ),
-          const SizedBox(height: 8.0),
-          Text(
-            '${video.viewCount} views • ${timeago.format(video.timestamp)}',
-            style:
-                Theme.of(context).textTheme.caption!.copyWith(fontSize: 14.0),
-          ),
+          // const SizedBox(height: 8.0),
+          // Text(
+          //   '${video.viewCount} views • ${timeago.format(video.timestamp)}',
+          //   style:
+          //       Theme.of(context).textTheme.caption!.copyWith(fontSize: 14.0),
+          // ),
           const Divider(),
           _ActionsRow(video: video),
           const Divider(),
+
+          // const Divider(),
+          // const Divider(thickness: 1,),
+          _OperatorInfo(user: video.author, string: 'Hotline 1 • 01234567890',),
+          _OperatorInfo(user: video.author, string: 'Hotline 2 • 09876543210',),
           _AuthorInfo(user: video.author),
-          const Divider(),
+
         ],
       ),
     );
@@ -53,29 +58,52 @@ class _ActionsRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _buildAction(context, Icons.thumb_up_outlined, video.likes),
-        _buildAction(context, Icons.thumb_down_outlined, video.dislikes),
-        _buildAction(context, Icons.reply_outlined, 'Share'),
-        _buildAction(context, Icons.download_outlined, 'Download'),
-        _buildAction(context, Icons.library_add_outlined, 'Save'),
+        // _buildAction(context, Icons.add_alert_outlined, "Alert"),
+        _buildAction(context, Icons.local_fire_department_outlined,
+            video.sensor,
+            checkSensor(video.sensor) ? Colors.red : Colors.white,
+            "Sensor"),
+        _buildAction(context, Icons.thermostat_outlined,
+            video.temp,
+            checkTemp(video.temp) ? Colors.red : Colors.white,
+            "Temp"),
+        _buildAction(context, Icons.remove_red_eye_outlined,
+            video.visionAI,
+            checkAI(video.visionAI) ? Colors.red : Colors.white,
+            "Vision AI"),
+        // _buildAction(context, Icons.thumb_down_outlined, video.dislikes, Colors.white),
+        // _buildAction(context, Icons.reply_outlined, 'Share'),
+        // _buildAction(context, Icons.download_outlined, 'Download'),
+        // _buildAction(context, Icons.library_add_outlined, 'Save', Colors.white),
       ],
     );
   }
 
-  Widget _buildAction(BuildContext context, IconData icon, String label) {
+  Widget _buildAction(
+      BuildContext context, IconData icon,
+      String label, Color? color,
+      String text) {
     return GestureDetector(
       onTap: () {},
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon),
+          Row(
+            children: [
+              Icon(icon, color: color,),
+              Text(text, style: Theme.of(context)
+                  .textTheme
+                  .caption!
+                  .copyWith(color: color, fontSize: 17.0),)
+            ],
+          ),
           const SizedBox(height: 6.0),
           Text(
             label,
             style: Theme.of(context)
                 .textTheme
                 .caption!
-                .copyWith(color: Colors.white),
+                .copyWith(color: color, fontSize: 17.0),
           ),
         ],
       ),
@@ -96,49 +124,129 @@ class _AuthorInfo extends StatelessWidget {
     return GestureDetector(
       onTap: () => print('Navigate to profile'),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CircleAvatar(
-            foregroundImage: NetworkImage(user.profileImageUrl),
-          ),
-          const SizedBox(width: 8.0),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+          // CircleAvatar(
+          //   foregroundImage: NetworkImage(user.profileImageUrl),
+          // ),
+          // const SizedBox(width: 8.0),
+          // Expanded(
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: [
+          //       Flexible(
+          //         child: Text(
+          //           user.username,
+          //           maxLines: 2,
+          //           overflow: TextOverflow.ellipsis,
+          //           style: Theme.of(context)
+          //               .textTheme
+          //               .bodyText1!
+          //               .copyWith(fontSize: 17.0),
+          //         ),
+          //       ),
+          //       // Flexible(
+          //       //   child: Text(
+          //       //     '${user.subscribers} subscribers',
+          //       //     maxLines: 2,
+          //       //     overflow: TextOverflow.ellipsis,
+          //       //     style: Theme.of(context)
+          //       //         .textTheme
+          //       //         .caption!
+          //       //         .copyWith(fontSize: 14.0),
+          //       //   ),
+          //       // ),
+          //     ],
+          //   ),
+          // ),
+          TextButton(
+            onPressed: () {},
+            child: Row(
               children: [
-                Flexible(
-                  child: Text(
-                    user.username,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(fontSize: 15.0),
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    '${user.subscribers} subscribers',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
-                        .textTheme
-                        .caption!
-                        .copyWith(fontSize: 14.0),
-                  ),
+                Icon(Icons.add_alert_outlined, color: Colors.red,),
+                SizedBox(width: 5.0,),
+                Text(
+                  'REPORT',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: Colors.red, fontSize: 19.0),
                 ),
               ],
             ),
-          ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _OperatorInfo extends StatelessWidget {
+  final User user;
+  final String string;
+
+  const _OperatorInfo({
+    Key? key,
+    required this.user,
+    required this.string
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => print('Navigate to profile'),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          // CircleAvatar(
+          //   foregroundImage: NetworkImage(user.profileImageUrl),
+          // ),
+          // const SizedBox(width: 8.0),
+          // Expanded(
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: [
+          //       Flexible(
+          //         child: Text(
+          //           user.username,
+          //           maxLines: 2,
+          //           overflow: TextOverflow.ellipsis,
+          //           style: Theme.of(context)
+          //               .textTheme
+          //               .bodyText1!
+          //               .copyWith(fontSize: 17.0),
+          //         ),
+          //       ),
+          //       // Flexible(
+          //       //   child: Text(
+          //       //     '${user.subscribers} subscribers',
+          //       //     maxLines: 2,
+          //       //     overflow: TextOverflow.ellipsis,
+          //       //     style: Theme.of(context)
+          //       //         .textTheme
+          //       //         .caption!
+          //       //         .copyWith(fontSize: 14.0),
+          //       //   ),
+          //       // ),
+          //     ],
+          //   ),
+          // ),
           TextButton(
             onPressed: () {},
-            child: Text(
-              'SUBSCRIBE',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(color: Colors.red),
+            child: Row(
+              children: [
+                Icon(Icons.phone_outlined, color: Colors.white,),
+                SizedBox(width: 5.0,),
+                Text(
+                  string,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: Colors.white, fontSize: 15.0),
+                ),
+              ],
             ),
           )
         ],

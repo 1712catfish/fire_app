@@ -77,23 +77,23 @@ class _VideoScreenState extends State<VideoScreen> {
                   },
                 ),
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final video = suggestedVideos[index];
-                    return VideoCard(
-                      video: video,
-                      hasPadding: true,
-                      onTap: () => _scrollController!.animateTo(
-                        0,
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeIn,
-                      ),
-                    );
-                  },
-                  childCount: suggestedVideos.length,
-                ),
-              ),
+              // SliverList(
+              //   delegate: SliverChildBuilderDelegate(
+              //     (context, index) {
+              //       final video = suggestedVideos[index];
+              //       return VideoCard(
+              //         video: video,
+              //         hasPadding: true,
+              //         onTap: () => _scrollController!.animateTo(
+              //           0,
+              //           duration: const Duration(milliseconds: 200),
+              //           curve: Curves.easeIn,
+              //         ),
+              //       );
+              //     },
+              //     childCount: suggestedVideos.length,
+              //   ),
+              // ),
             ],
           ),
         ),
